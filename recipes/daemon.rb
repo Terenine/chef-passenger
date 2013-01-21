@@ -7,6 +7,7 @@ include_recipe "passenger::install"
 cc='gcc'
 
 package "curl"
+package "curl-devel"
 if ['ubuntu', 'debian'].member? node[:platform]
   ['libcurl4-openssl-dev','libpcre3-dev'].each do |pkg|
     package pkg
@@ -26,7 +27,7 @@ bash "install passenger/nginx" do
   CC=#{cc} passenger-install-nginx-module --auto --auto-download --prefix="#{nginx_path}" --extra-configure-flags="#{node[:passenger][:production][:configure_flags]}"
   EOH
   not_if do
-    (((File.exists? nginx_path) && (File.directory? nginx_path)) || 
+    (((File.exists? nginx_path) && (File.directory? nginx_path)) ||
      ((File.exists? '/usr/local/rvm') && (File.directory? '/usr/local/rvm')))
   end
 end
