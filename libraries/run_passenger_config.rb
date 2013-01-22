@@ -7,7 +7,7 @@ class Chef
       if File.exists?("/usr/local/bin/rvm")
         return `/usr/local/bin/rvm default exec passenger-config #{opts * ' '}`.chomp
       else
-        return "passenger-config #{opts * ' '}"
+        return "/usr/local/bin/ruby passenger-config #{opts * ' '}"
       end
     end
   end
